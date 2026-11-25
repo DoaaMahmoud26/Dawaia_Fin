@@ -3,6 +3,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/services/auth_service.dart';
 import '../../../models/app_user.dart';
 import 'favorites_screen.dart';
+import '../settings/settings_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   final AppUser user;
@@ -34,6 +35,16 @@ class ProfileScreen extends StatelessWidget {
                 context, MaterialPageRoute(builder: (_) => FavoritesScreen(uid: user.uid))),
           ),
         ),
+        Card(
+          child: ListTile(
+            leading: const Icon(Icons.settings_outlined, color: AppColors.primary),
+            title: const Text('الإعدادات'),
+            trailing: const Icon(Icons.chevron_left),
+            onTap: () => Navigator.push(
+                context, MaterialPageRoute(builder: (_) => const SettingsScreen())),
+          ),
+        ),
+        const SizedBox(height: 10),
         const SizedBox(height: 10),
         Card(
           child: ListTile(

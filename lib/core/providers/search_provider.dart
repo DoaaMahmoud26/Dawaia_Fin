@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:geolocator/geolocator.dart';
 import '../../database/local_db.dart';
 import '../../models/search_result.dart';
 import '../services/firestore_service.dart';
@@ -21,7 +20,7 @@ class SearchProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> search(String query, Position? pos) async {
+  Future<void> search(String query, double? myLat, double? myLng) async {
     loading = true;
     results = [];
     notifyListeners();
@@ -38,10 +37,9 @@ class SearchProvider extends ChangeNotifier {
         for (final m in meds) {
           final p = pharmacies[m.pharmacyId];
           if (p == null) continue;
-          final d = pos == null
+          final d = (myLat == null || myLng == null)
               ? null
-              : LocationService.distanceKm(
-              pos.latitude, pos.longitude, p.lat, p.lng);
+              : LocationService.distanceKm(myLat, myLng, p.lat, p.lng);
           list.add(SearchResult(m, p, d));
         }
         list.sort((a, b) =>

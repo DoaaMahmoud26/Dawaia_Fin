@@ -21,8 +21,8 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final loc = context.read<LocationProvider>();
       final search = context.read<SearchProvider>();
-      if (loc.position == null) await loc.refresh();
-      await search.search(widget.query, loc.position);
+      if (!loc.hasLocation) await loc.refresh();
+      await search.search(widget.query, loc.lat, loc.lng);
     });
   }
 
@@ -73,9 +73,8 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
               ),
               onTap: () => Navigator.pushNamed(
                 context,
-                AppRoutes.pharmacyDetails,
-                arguments: PharmacyDetailsArgs(r.pharmacy,
-                    medicineName: r.medicine.name),
+                AppRoutes.medicineDetails,
+                arguments: r,
               ),
             ),
           );

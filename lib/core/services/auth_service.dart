@@ -53,6 +53,8 @@ class AuthService {
   }
 
   Future<void> signOut() => _auth.signOut();
+  Future<void> sendPasswordReset(String email) =>
+      _auth.sendPasswordResetEmail(email: email);
 
   static String message(String code) {
     switch (code) {

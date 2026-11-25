@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-
-import '../../features/ pharmacist/add_edit_medicine_screen.dart';
-import '../../features/ pharmacist/inventory_screen.dart';
 import '../../features/admin/pharmacies_management_screen.dart';
 import '../../features/admin/reports_screen.dart';
 import '../../features/admin/users_management_screen.dart';
@@ -13,8 +10,13 @@ import '../../features/authentication/splash_screen.dart';
 import '../../features/patient/map/map_screen.dart';
 import '../../features/patient/pharmacy_details/pharmacy_details_screen.dart';
 import '../../features/patient/search/search_results_screen.dart';
+import '../../features/pharmacist/add_edit_medicine_screen.dart';
+import '../../features/pharmacist/inventory_screen.dart';
 import '../../models/medicine.dart';
 import '../../models/pharmacy.dart';
+import '../../features/admin/admin_medicines_screen.dart';
+import '../../features/patient/medicine_details/medicine_details_screen.dart';
+import '../../models/search_result.dart';
 
 class AppRoutes {
   static const splash = '/';
@@ -30,6 +32,8 @@ class AppRoutes {
   static const adminUsers = '/admin/users';
   static const adminPharmacies = '/admin/pharmacies';
   static const adminReports = '/admin/reports';
+  static const adminMedicines = '/admin/medicines';
+  static const medicineDetails = '/medicine';
 }
 
 class AppRouter {
@@ -74,6 +78,12 @@ class AppRouter {
         break;
       case AppRoutes.adminReports:
         page = const ReportsScreen();
+        break;
+      case AppRoutes.adminMedicines:
+        page = const AdminMedicinesScreen();
+        break;
+      case AppRoutes.medicineDetails:
+        page = MedicineDetailsScreen(result: s.arguments as SearchResult);
         break;
       default:
         page = const AuthGate();

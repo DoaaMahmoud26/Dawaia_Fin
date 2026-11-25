@@ -80,9 +80,15 @@ class FirestoreService {
   }
 
   // ---------------- Medicines ----------------
+  // ---------------- Medicines ----------------
   Stream<List<Medicine>> streamMedicines(String pharmacyId) => _db
       .collection('medicines')
       .where('pharmacyId', isEqualTo: pharmacyId)
+      .snapshots()
+      .map((s) => s.docs.map(Medicine.fromDoc).toList());
+
+  Stream<List<Medicine>> streamAllMedicines() => _db
+      .collection('medicines')
       .snapshots()
       .map((s) => s.docs.map(Medicine.fromDoc).toList());
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../ pharmacist/pharmacist_shell.dart';
 import '../../core/providers/auth_provider.dart';
 
-import '../admin/admin_dashboard_screen.dart';
+import '../admin/admin_shell.dart';
 import '../patient/patient_shell.dart';
 import 'package:provider/provider.dart';
+import '../pharmacist/pharmacist_shell.dart';
 import 'login_screen.dart';
 
 class AuthGate extends StatelessWidget {
@@ -37,7 +37,7 @@ class AuthGate extends StatelessWidget {
       case 'pharmacist':
         return PharmacistShell(user: user);
       case 'admin':
-        return const AdminDashboardScreen();
+        return AdminShell(user: user);
       default:
         return PatientShell(user: user);
     }

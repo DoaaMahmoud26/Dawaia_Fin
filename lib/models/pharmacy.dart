@@ -28,7 +28,7 @@ class Pharmacy {
       lat: (m['lat'] ?? 30.0444).toDouble(),
       lng: (m['lng'] ?? 31.2357).toDouble(),
       rating: (m['rating'] ?? 0).toDouble(),
-      approved: m['approved'] ?? false,
+      approved: m['approved'] == true || m['approved'] == 'true',
     );
   }
 }

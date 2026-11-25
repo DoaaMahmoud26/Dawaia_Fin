@@ -23,7 +23,7 @@ class Medicine {
       name: m['name'] ?? '',
       price: (m['price'] ?? 0).toDouble(),
       quantity: (m['quantity'] ?? 0).toInt(),
-      available: m['available'] ?? false,
+      available: m['available'] == true || m['available'] == 'true',
     );
   }
 

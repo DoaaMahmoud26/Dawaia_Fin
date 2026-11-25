@@ -1,5 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+
+bool _toBool(dynamic v, {bool fallback = true}) {
+  if (v is bool) return v;
+  if (v is String) return v.trim().toLowerCase() == 'true';
+  if (v is num) return v != 0;
+  return fallback;
+}
+
 class AppUser {
   final String uid, name, email, role; // patient | pharmacist | admin
   final bool isActive;
@@ -18,11 +26,13 @@ class AppUser {
     final m = d.data() as Map<String, dynamic>;
     return AppUser(
       uid: d.id,
-      name: m['name'] ?? '',
-      email: m['email'] ?? '',
-      role: m['role'] ?? 'patient',
-      isActive: m['isActive'] ?? true,
-      favorites: List<String>.from(m['favorites'] ?? []),
+      name: (m['name'] ?? '').toString(),
+      email: (m['email'] ?? '').toString(),
+      role: (m['role'] ?? 'patient').toString().trim(),
+      isActive: _toBool(m['isActive']),
+      favorites: (m['favorites'] is List)
+          ? List<String>.from((m['favorites'] as List).map((e) => e.toString()))
+          : <String>[],
     );
   }
 }

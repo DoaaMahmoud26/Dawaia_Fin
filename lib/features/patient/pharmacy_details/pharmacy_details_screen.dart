@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide AuthProvider;
 import 'package:url_launcher/url_launcher.dart';
-
 import 'package:provider/provider.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/routes/app_router.dart';
@@ -130,6 +129,17 @@ class PharmacyDetailsScreen extends StatelessWidget {
           icon: Icons.map,
           light: true,
           onPressed: () => Navigator.pushNamed(context, AppRoutes.map, arguments: p),
+        ),
+        const SizedBox(height: 10),
+        AppButton(
+          label: 'اتجاهات',
+          icon: Icons.directions,
+          light: true,
+          onPressed: () => launchUrl(
+            Uri.parse(
+                'https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}'),
+            mode: LaunchMode.externalApplication,
+          ),
         ),
       ]),
     );

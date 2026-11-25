@@ -29,6 +29,36 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _loading = false);
     if (err != null) showSnack(context, err);
   }
+  Future<void> _forgot() async {
+    final c = TextEditingController(text: _email.text.trim());
+    final email = await showDialog<String>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('استعادة كلمة المرور'),
+        content: TextField(
+          controller: c,
+          keyboardType: TextInputType.emailAddress,
+          decoration: const InputDecoration(hintText: 'البريد الإلكتروني'),
+        ),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('إلغاء')),
+          TextButton(
+              onPressed: () => Navigator.pop(context, c.text.trim()),
+              child: const Text('إرسال')),
+        ],
+      ),
+    );
+    if (email == null || email.isEmpty || !mounted) return;
+    final err = await context.read<AuthProvider>().sendPasswordReset(email);
+    if (!mounted) return;
+    if (err != null) {
+      showSnack(context, err);
+    } else {
+      showSnack(context, 'تم إرسال رابط الاستعادة لبريدك', error: false);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,6 +82,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 AppTextField(
                     controller: _pass, label: 'كلمة المرور',
                     icon: Icons.lock_outline, obscure: true),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                    onPressed: _forgot,
+                    child: const Text('نسيت كلمة المرور؟'),
+                  ),
+                ),
                 const SizedBox(height: 22),
                 AppButton(label: 'تسجيل الدخول', onPressed: _login, loading: _loading),
                 const SizedBox(height: 16),

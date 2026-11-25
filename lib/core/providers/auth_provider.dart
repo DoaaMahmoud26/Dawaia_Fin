@@ -66,6 +66,15 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  /// ترجع رسالة الخطأ، أو null لو الإرسال نجح
+  Future<String?> sendPasswordReset(String email) async {
+    try {
+      await AuthService.instance.sendPasswordReset(email);
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return AuthService.message(e.code);
+    }
+  }
   Future<void> signOut() => AuthService.instance.signOut();
 
   // ---------- المفضلة ----------
